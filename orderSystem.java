@@ -68,7 +68,7 @@ public class orderSystem{
         Products();
         System.out.println("SELECT THE NUMBER OF THE ITEM");
         buyitem = scanner.nextInt();
-        Valedation();
+        Validation();
         System.out.println("HOW MANY?");
         int buyQuantity = scanner.nextInt();
         total = price[buyitem] * buyQuantity;
@@ -135,7 +135,7 @@ public class orderSystem{
 
 
 
-    public static void Valedation(){
+    public static void Validation(){
         if(items.length > buyitem && buyitem >= 0){
             return;
         }else{
@@ -160,7 +160,7 @@ public class orderSystem{
                 Products();
                 System.out.println("SELECT THE NUMBER OF THE ITEM");
                 buyitem = scanner.nextInt();
-                Valedation();
+                Validation();
                 System.out.println("HOW MANY?");
                 int quantitymore = scanner.nextInt();
                 total = total + price[buyitem] * quantitymore;
