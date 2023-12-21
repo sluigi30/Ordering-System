@@ -6,16 +6,10 @@ public class orderSystem{
     private static int change;
     private static int total;
     private static int buyitem;
-
     
     public static void main(String[] args) {
         MainMenu();
     }
-
-
-
-
-
 
     public static void MainMenu(){
         Scanner scanner = new Scanner(System.in);
@@ -39,11 +33,6 @@ public class orderSystem{
         }
     }
 
-
-
-
-
-
     public static void Products() {
         Scanner scanner = new Scanner(System.in);
         double total=0;
@@ -56,12 +45,8 @@ public class orderSystem{
                 System.out.println("             "+i +"  *"+ items[i] + " = " + price[i]+"*");
             }
         } 
-    System.out.println("++=========================================++");
-}
-
-
-
-
+        System.out.println("++=========================================++");
+    }
 
     public static void Buy(){
         Scanner scanner = new Scanner(System.in);
@@ -73,15 +58,7 @@ public class orderSystem{
         int buyQuantity = scanner.nextInt();
         total = price[buyitem] * buyQuantity;
         BuyMenu();
-       
-        
-    
-
     }
-
-
-
-
 
     public static void Checkout(){
         Scanner scanner = new Scanner(System.in);
@@ -99,12 +76,6 @@ public class orderSystem{
                 }
     }
 
-
-
-
-
-
-
     public static void Add(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("PRODUCT NAME: ");
@@ -117,23 +88,20 @@ public class orderSystem{
         Products();
         MainMenu();
     }
+
     public static String[] addItemToArray(String[] oldArray, String newItem) {
         String[] newArray = new String[oldArray.length + 1];
         System.arraycopy(oldArray, 0, newArray, 0, oldArray.length);
         newArray[newArray.length - 1] = newItem;
         return newArray;
     }
+
     public static int[] addItemToArray(int[] oldArray, int newItem) {
         int[] newArray = new int[oldArray.length + 1];
         System.arraycopy(oldArray, 0, newArray, 0, oldArray.length);
         newArray[newArray.length - 1] = newItem;
         return newArray;
     }
-
-
-
-
-
 
     public static void Validation(){
         if(items.length > buyitem && buyitem >= 0){
@@ -143,10 +111,6 @@ public class orderSystem{
             Buy();
         }
     }
-
-
-
-
 
     public static void BuyMenu(){
         Scanner scanner = new Scanner(System.in);
@@ -167,10 +131,6 @@ public class orderSystem{
                 System.out.println("YOUR TOTAL IS: "+ total);
                 BuyMenu();
                 break;
-                
-                
-            
-
             case 2:
                 System.out.println("YOUR TOTAL IS: " + total);
                 Checkout();
