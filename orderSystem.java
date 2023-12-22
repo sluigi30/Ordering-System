@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 public class orderSystem{
     private static String[] items = {"PIATTOS", "COKE", "PEPSI", "OISHI", "CALBEE"};
@@ -6,6 +8,11 @@ public class orderSystem{
     private static int change;
     private static int total;
     private static int buyitem;
+    private static int newbuyitem;
+    private static int quantitymore;
+    private static int buyQuantity;
+    private static List<History> orderHistory = new ArrayList<>();
+
     
     public static void main(String[] args) {
         MainMenu();
@@ -14,8 +21,9 @@ public class orderSystem{
     public static void MainMenu(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("++=========================================++");
-        System.out.println("              1. *PURCHASE*                   ");
-        System.out.println("              2. *ADD PRODUCT*                ");
+        System.out.println("              1. *PURCHASE*                  ");
+        System.out.println("              2. *ADD PRODUCT*               ");
+        System.out.println("              3. *HISTORY*                   ");
         System.out.println("++=========================================++");
         System.out.print("SELECT AN OPTION ");
         int mainnum = scanner.nextInt();
@@ -25,6 +33,9 @@ public class orderSystem{
                 break;
             case 2:
                 Add();
+                break;
+            case 3:
+                showHistory();
                 break;
             default:
                 System.out.println("PLEASE CHOOSE THE GIVEN CHOICES");
@@ -57,6 +68,9 @@ public class orderSystem{
         System.out.println("HOW MANY?");
         int buyQuantity = scanner.nextInt();
         total = price[buyitem] * buyQuantity;
+        
+        History newHistory = new History(items[buyitem],buyQuantity, items[newbuyitem], quantitymore , total);
+        orderHistory.add(newHistory);
         BuyMenu();
     }
 
@@ -65,15 +79,17 @@ public class orderSystem{
         System.out.print("PAYMENT AMOUNT: ");
         payment = scanner.nextInt();
         if (payment == total) {
-                    System.out.println("THANK YOU FOR BUYING!");
-                }else if (payment>total) {
-                    change = payment - total;
-                    System.out.println("YOUR CHANGE IS "+ change);
-                    System.out.println("THANK YOU FOR BUYING!");
-                }else{
-                    System.out.println("NOT ENOUGH PAYMENT! ERROR!");
-                    Checkout();
-                }
+            System.out.println("THANK YOU FOR BUYING!");
+            MainMenu();
+        }else if (payment>total) {
+            change = payment - total;
+            System.out.println("YOUR CHANGE IS "+ change);
+            System.out.println("THANK YOU FOR BUYING!");
+            MainMenu();
+        }else{
+            System.out.println("NOT ENOUGH PAYMENT! ERROR!");
+            Checkout();
+        }
     }
 
     public static void Add(){
@@ -104,10 +120,19 @@ public class orderSystem{
     }
 
     public static void Validation(){
-        if(items.length > buyitem && buyitem >= 0){
+        if(items.length > buyitem && buyitem >= 0 ){
             return;
         }else{
-            System.out.println("PLEASE CHOOSE THE GIVEN OPTION ONLY! ERROR! ERROR!");
+            System.out.println("ERROR: PLEASE CHOOSE THE GIVEN OPTION ONLY!");
+            Buy();
+        }
+    }
+
+    public static void Validation2(){
+        if(items.length > newbuyitem && newbuyitem >= 0 ){
+            return;
+        }else{
+            System.out.println("ERROR: PLEASE CHOOSE THE GIVEN OPTION ONLY!");
             Buy();
         }
     }
@@ -123,12 +148,16 @@ public class orderSystem{
             case 1:
                 Products();
                 System.out.println("SELECT THE NUMBER OF THE ITEM");
-                buyitem = scanner.nextInt();
-                Validation();
+                newbuyitem = scanner.nextInt();
+                Validation2();
                 System.out.println("HOW MANY?");
                 int quantitymore = scanner.nextInt();
-                total = total + price[buyitem] * quantitymore;
+                total = total + price[newbuyitem] * quantitymore;
                 System.out.println("YOUR TOTAL IS: "+ total);
+                BuyMenu();
+                History newHistory = new History(items[buyitem],buyQuantity, items[newbuyitem], quantitymore , total);
+                orderHistory.add(newHistory);
+                System.out.println("Item added to order history in Buymenu method.");
                 BuyMenu();
                 break;
             case 2:
@@ -138,5 +167,18 @@ public class orderSystem{
             default:
                 break;
         }
+    }
+
+    public static void showHistory(){
+        System.out.println("++=========================================++");
+        System.out.println("                  *HISTORY*                  ");
+        System.out.println("++=========================================++");
+        for(History history : orderHistory){
+            System.out.println("ITEMS: " + history.getitemName() + " " + history.getnewitemName());
+            System.out.println("QUANTITY: " + history.getquantity() + history.getnewquantity());
+            System.out.println("TOTAL: " + history.gettotalPrice());
+            System.out.println("----------- ----");
+        }
+        
     }
 }
