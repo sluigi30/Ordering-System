@@ -12,6 +12,7 @@ public class orderSystem{
     private static int quantitymore;
     private static int buyQuantity;
     private static int buyChoice;
+    private static int mainnum;
     private static List<History> orderHistory = new ArrayList<>();
 
     
@@ -27,7 +28,8 @@ public class orderSystem{
         System.out.println("              3. *HISTORY*                   ");
         System.out.println("++=========================================++");
         System.out.print("SELECT AN OPTION ");
-        int mainnum = scanner.nextInt();
+        mainnum = scanner.nextInt();
+        
         switch (mainnum) {
             case 1:
                 Buy();
@@ -46,9 +48,7 @@ public class orderSystem{
     }
 
     public static void Products() {
-        Scanner scanner = new Scanner(System.in);
-        double total=0;
-        int quantity = 0;
+        
         
         
         System.out.println("++=========================================++");
@@ -89,11 +89,7 @@ public class orderSystem{
         System.out.println("YOUR TOTAL IS: "+ total);
         String newHistory = "ADDED PRODUCT: " + items[newbuyitem] + ", QUANTITY: " + quantitymore;
         History Histories = new History(newHistory);
-        orderHistory.add(Histories);
-        // orderHistory.get(orderHistory.size() - 1).setnewitemName(items[newbuyitem]);
-        // orderHistory.get(orderHistory.size() - 1).setnewquantity(quantitymore);
-        // orderHistory.get(orderHistory.size() - 1).setnewtotal(total);
-
+        orderHistory.add(Histories); 
         BuyMenu();
         
     }
@@ -105,7 +101,6 @@ public class orderSystem{
         System.out.println("              2. *CHECK OUT*                   ");
         System.out.println("++=========================================++");
         buyChoice = scanner.nextInt();
-        Validation3();
         switch (buyChoice) {
             case 1:
                buymore();
@@ -115,6 +110,8 @@ public class orderSystem{
                 Checkout();
                 break;
             default:
+                System.out.println("ERROR: PLEASE CHOOSE THE GIVEN OPTION ONLY!");
+                BuyMenu();
                 break;
         }
     }
@@ -184,14 +181,6 @@ public class orderSystem{
         }
     }
 
-    private static void Validation3() {
-        if(buyChoice == 1 || buyChoice == 2 ){
-            return;
-        }else{
-            System.out.println("ERROR: PLEASE CHOOSE THE GIVEN OPTION ONLY!");
-            BuyMenu();
-        }
-    }
 
     public static void showHistory(){
         System.out.println("++=========================================++");
@@ -200,6 +189,7 @@ public class orderSystem{
         for(History newhistory : orderHistory){
             System.out.println(newhistory.getitemHistory());
         }
+        System.out.println("----------------------------");
         MainMenu();
     }
 }
